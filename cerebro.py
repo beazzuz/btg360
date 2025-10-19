@@ -6,7 +6,7 @@ import json
 
 # configurando a api do gemini
 try:
-    genai.configure(api_key="AIzaSyDMiRzuKh2Hkd_VDy_MjOR0VKkrUSAEySI")
+    genai.configure(api_key="AIzaSyDXeDkvh_loYG7eBJSsPvggzjRrbH1R5SM")
 except Exception as e:
     print(f"Erro ao configurar a API no cerebro.py: {e}")
     exit()
@@ -139,4 +139,4 @@ def roteador_ia(mensagem_usuario: str, user_id: str) -> dict:
         if user_id in ACTIVE_CHATS: del ACTIVE_CHATS[user_id]
         
         # resposta mais clara para o usuário sobre o problema
-        return {"tipo_acao": "responder_texto", "conteudo": "Desculpe, ocorreu um erro técnico na comunicação. Por favor, tente reformular sua frase, dizendo o valor, a meta e o prazo na mesma mensagem (ex: 'Quero investir 20 mil para a Disney em 2026')."}
+        return {"tipo_acao": "responder_texto", "conteudo": "Desculpe, ocorreu um erro técnico na comunicação. Por favor, tente reformular sua frase."}

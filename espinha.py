@@ -7,7 +7,7 @@ import math
 
 # --- CONFIGURAÇÃO ---
 try:
-   genai.configure(api_key="AIzaSyDMiRzuKh2Hkd_VDy_MjOR0VKkrUSAEySI")
+   genai.configure(api_key="AIzaSyDXeDkvh_loYG7eBJSsPvggzjRrbH1R5SM")
 except Exception as e:
     print(f"Erro ao configurar a API no espinha.py. Verifique sua chave. Erro: {e}")
     exit()

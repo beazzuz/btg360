@@ -1,9 +1,3 @@
-# ============================================================
-# app_local.py — versão para rodar LOCALMENTE (sem Twilio)
-# Mantém a mesma lógica do seu app.py, mas expõe um chat web
-# e uma API local para simular mensagens.
-# ============================================================
-
 print("="*60)
 print("==> INICIANDO O SERVIDOR LOCAL DO ASSISTENTE FINANCEIRO <== (Sem Twilio)")
 print("="*60)
@@ -24,10 +18,7 @@ from espinha import (
     manipular_caixinha_investimento
 )
 
-# ------------------------------------------------------------
-# Mapeamento das funções invocáveis pela IA
-# (nomes precisam bater com o que o roteador retorna)
-# ------------------------------------------------------------
+#mapeamento de funções disponíveis
 FUNCOES_DISPONIVEIS = {
     "analisar_gastos_com_ia": analisar_gastos_com_ia,
     "iniciar_plano_de_riqueza": iniciar_plano_de_riqueza,
@@ -36,14 +27,12 @@ FUNCOES_DISPONIVEIS = {
     # iniciar_pergunta_risco / finalizar_proposta_carteira são chamadas pelo próprio app no fluxo multi-etapas
 }
 
-# Memória curta por usuário (igual ao app com Twilio)
+#memoria curta de conversas (em memória)
 CONVERSATION_CONTEXT = {}
 
 app = Flask(__name__)
 
-# ------------------------------------------------------------
-# PÁGINA DE CHAT LOCAL (HTML simples)
-# ------------------------------------------------------------
+#pag do chat local
 HTML_CHAT = """
 <!doctype html>
 <html lang="pt-br">
@@ -101,7 +90,7 @@ HTML_CHAT = """
       color:#9fb4ff;font-weight:800;flex-shrink:0;border:1px solid var(--border)
     }
     .bubble{
-      mix-width:min(72%,500px);
+      min-width:min(72%,680px);
       padding:12px 14px;border-radius:var(--radius);line-height:1.4;white-space:pre-wrap;word-wrap:break-word;
       border:1px solid var(--border);box-shadow:var(--shadow)
     }
@@ -122,7 +111,7 @@ HTML_CHAT = """
     }
     textarea{
       flex:1;min-height:20px;max-height:160px;resize:none;border:0;outline:none;background:transparent;color:var(--text);
-      font:16px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;padding:8px 10px; min wi
+      font:16px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;padding:8px 10px;
     }
     button{
       border:0;cursor:pointer;background:var(--accent);color:#0b1220;font-weight:800;border-radius:12px;
@@ -242,23 +231,20 @@ HTML_CHAT = """
 </html>
 """
 
-# ------------------------------------------------------------
-# Home (UI do chat local)
-# ------------------------------------------------------------
-@app.get("/")
+
+
+# Home (UI do chat local)@app.get("/")
 def home():
     return Response(HTML_CHAT, mimetype="text/html; charset=utf-8")
 
-# ------------------------------------------------------------
+
 # API de mensagens locais (simula o webhook)
-# ------------------------------------------------------------
 @app.post("/api/message")
 def api_message():
     payload = request.get_json(force=True, silent=True) or {}
     incoming_msg = (payload.get("mensagem") or "").strip()
     user_id = payload.get("user_id") or "local:teste"
 
-    # --- LOG VISÍVEL ---
     print("\n\n################################################################################")
     print(f"## [REQUISIÇÃO INICIADA] [{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]")
     print("################################################################################")
@@ -268,9 +254,7 @@ def api_message():
 
     response_msg = "Desculpe, não consegui processar sua solicitação."
 
-    # =========================
-    # 1) CONTINUAÇÃO DE FLUXO
-    # =========================
+   
     if user_id in CONVERSATION_CONTEXT:
         contexto_salvo = CONVERSATION_CONTEXT[user_id]
 
@@ -351,9 +335,9 @@ def api_message():
 
         return jsonify({"resposta": response_msg})
 
-    # =========================
-    # 2) NOVA CONVERSA / AÇÃO
-    # =========================
+   
+    # NOVA CONVERSA 
+  
     print("## [FLUXO DE NEGÓCIO] Contexto NÃO encontrado. Chamando o Roteador da IA...")
 
     acao_sugerida = roteador_ia(incoming_msg, user_id)
