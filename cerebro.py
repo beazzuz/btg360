@@ -1,18 +1,17 @@
-# Arquivo: cerebro.py
 import google.generativeai as genai
 from google.generativeai.types import Tool
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import json
 
-# --- CONFIGURAÇÃO ---
+# configurando a api do gemini
 try:
     genai.configure(api_key="AIzaSyDMiRzuKh2Hkd_VDy_MjOR0VKkrUSAEySI")
 except Exception as e:
     print(f"Erro ao configurar a API no cerebro.py: {e}")
     exit()
 
-# --- DEFINIÇÃO DAS FERRAMENTAS (Versão Aprimorada com Exemplos) ---
+# definindo as ferramentas
 MINHAS_FERRAMENTAS = [
     {
        "name": "analisar_gastos_com_ia",
@@ -59,6 +58,8 @@ MINHAS_FERRAMENTAS = [
 ]
 DATA_ATUAL_HOJE = datetime.now()
 MODELO = 'gemini-2.5-flash'
+
+# modelando o comportamento padrão do chat
 INSTRUCAO_SISTEMA = (f"""
 Você é um **Consultor Financeiro Sênior e Proativo do BTG Pactual**. Sua função primária é facilitar a gestão financeira do usuário e atuar como um concierge de metas e investimentos. Seu tom é profissional, acessível, e você deve usar emojis, negrito e boa formatação para rápida visualização.
 
@@ -92,12 +93,8 @@ modelo_com_ferramentas = genai.GenerativeModel(
     tools=MINHAS_FERRAMENTAS
 )
 
-# --- NOVA LÓGICA DE MEMÓRIA DE CONVERSA ---
 ACTIVE_CHATS = {}
 
-# Arquivo: cerebro.py (Função roteador_ia - VERSÃO MAIS ROBUSTA)
-
-# ... (código omitido) ...
 
 def roteador_ia(mensagem_usuario: str, user_id: str) -> dict:
     """
@@ -105,7 +102,7 @@ def roteador_ia(mensagem_usuario: str, user_id: str) -> dict:
     """
     global ACTIVE_CHATS
     
-    # Se não houver um chat ativo para este usuário, crie um novo.
+    # se não houver um chat ativo para este usuário, criamos um novo
     if user_id not in ACTIVE_CHATS:
         print(f"DEBUG: Criando nova sessão de chat para {user_id}")
         ACTIVE_CHATS[user_id] = modelo_com_ferramentas.start_chat()
@@ -120,23 +117,16 @@ def roteador_ia(mensagem_usuario: str, user_id: str) -> dict:
             
             ordem = primeira_parte.function_call
             
-            # --- EXTRAÇÃO ROBUSTA DOS ARGUMENTOS ---
-            # Converte para dict, o que deve ser seguro
             argumentos = dict(ordem.args)
-            
-            # GARANTIA DE ARGUMENTOS NULOS para todas as ferramentas que usam argumentos opcionais
-            
-            # 1. Ferramenta de Planejamento de Meta
+                        
+            # ferramenta de planejamento de meta
             if ordem.name == "iniciar_plano_de_riqueza":
                 argumentos['prazo_limite'] = argumentos.get('prazo_limite') # Se não existir, retorna None
             
-            # 2. Ferramenta de Análise de Gastos (Apenas 'mes' é obrigatório)
+            # ferramenta de análise de gastos
             if ordem.name == "analisar_gastos_com_ia":
                  argumentos['mes'] = argumentos.get('mes')
 
-            # -----------------------------------------------
-
-            # Se a IA chamar uma função, a conversa "de perguntas" termina.
             del ACTIVE_CHATS[user_id]
             
             return {"tipo_acao": "chamar_funcao", "nome_funcao": ordem.name, "argumentos": argumentos}
@@ -145,8 +135,8 @@ def roteador_ia(mensagem_usuario: str, user_id: str) -> dict:
             
     except Exception as e:
         print(f"ERRO no cérebro da IA: {e}")
-        # Limpa o chat em caso de erro para recomeçar.
+        # limpa o chat em caso de erro para recomeçar.
         if user_id in ACTIVE_CHATS: del ACTIVE_CHATS[user_id]
         
-        # Resposta mais clara para o usuário sobre o problema
+        # resposta mais clara para o usuário sobre o problema
         return {"tipo_acao": "responder_texto", "conteudo": "Desculpe, ocorreu um erro técnico na comunicação. Por favor, tente reformular sua frase, dizendo o valor, a meta e o prazo na mesma mensagem (ex: 'Quero investir 20 mil para a Disney em 2026')."}
