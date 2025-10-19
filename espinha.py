@@ -4,9 +4,9 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import google.generativeai as genai
 import math
+
 # --- CONFIGURAÇÃO ---
 try:
-    # IMPORTANTE: Coloque sua chave de API aqui também
    genai.configure(api_key="AIzaSyDMiRzuKh2Hkd_VDy_MjOR0VKkrUSAEySI")
 except Exception as e:
     print(f"Erro ao configurar a API no espinha.py. Verifique sua chave. Erro: {e}")
@@ -25,9 +25,6 @@ def processar_com_ia(prompt: str) -> dict:
         print(f"ERRO ao processar com IA: {e}")
         return {"erro": "Não foi possível processar a solicitação com a IA."}
     
-# Arquivo: espinha.py
-
-# ... (restante dos imports) ...
 
 data_atual = datetime.now()
 
@@ -44,7 +41,7 @@ def converter_prazo_para_meses(prazo_limite_str: str) -> int:
         'julho': 7, 'agosto': 8, 'setembro': 9, 'outubro': 10, 'novembro': 11, 'dezembro': 12
     }
 
-    # Caso A: ano puro (ex: "2027")
+    # Caso A: ano puro 
     if len(s) == 4 and s.isdigit():
         try:
             ano_meta = int(s)
@@ -54,7 +51,7 @@ def converter_prazo_para_meses(prazo_limite_str: str) -> int:
         except ValueError:
             pass
 
-    # Caso B: "mês de AAAA" (ex: "janeiro de 2028", "novembro 2026")
+    # Caso B: "mês de AAAA" 
     for nome_mes, num_mes in meses_map.items():
         if nome_mes in s:
             partes = s.replace("de", " ").split()
@@ -66,7 +63,7 @@ def converter_prazo_para_meses(prazo_limite_str: str) -> int:
                     return max(0, diff.years * 12 + diff.months + (1 if diff.days > 0 else 0))
                 except ValueError:
                     pass
-            break  # havia um mês, mas ano não entendido
+            break  
 
     # Caso C: "X anos"
     if "ano" in s:
@@ -80,22 +77,9 @@ def converter_prazo_para_meses(prazo_limite_str: str) -> int:
             if p.isdigit():
                 return int(p)
 
-    # Caso desconhecido
+
     return 0
 
-
-# Arquivo: espinha.py (Função analisar_gastos_com_ia CORRIGIDA para Precisão de Cálculo)
-
-# ... (outros imports e funções) ...
-
-# Arquivo: espinha.py (Função analisar_gastos_com_ia CORRIGIDA para o NameError)
-
-# ... (outros imports e funções) ...
-
-# Arquivo: espinha.py (Função analisar_gastos_com_ia - VERSÃO FINAL COMPLETA)
-
-# Lembre-se de que as funções processar_com_ia e os imports (datetime, json, math)
-# devem estar no topo do arquivo.
 
 def analisar_gastos_com_ia(mes: str) -> dict:
     with open('dados.json', 'r', encoding='utf-8') as f:
@@ -106,14 +90,15 @@ def analisar_gastos_com_ia(mes: str) -> dict:
         'julho': 7, 'agosto': 8, 'setembro': 9, 'outubro': 10, 'novembro': 11, 'dezembro': 12
     }
     
-    # Extrai o nome do mês (ignora 'de 2025' ou qualquer coisa após a primeira palavra)
+    # Extrai o nome do mês 
     mes_nome_simples = mes.lower().split()[0]
     mes_atual_num = meses_map.get(mes_nome_simples)
 
     if mes_atual_num is None:
         return {"erro": "Mês não reconhecido."}
-        
-    # --- CÁLCULO DE GASTOS COMPLETO (Python) ---
+
+    
+    # --- CÁLCULO DE GASTOS ---
     
     def calcular_gastos(mes_num, ano):
         gastos = {}
@@ -135,7 +120,7 @@ def analisar_gastos_com_ia(mes: str) -> dict:
     if not gastos_mes_atual:
         return {"total_gasto": 0, "gastos_por_categoria": {}, "insight": "Nenhum gasto encontrado para este mês."}
 
-    # Mês Anterior (Para comparação)
+    # Mês Anterior 
     mes_anterior_num = mes_atual_num - 1
     ano_anterior = ano_base
     if mes_anterior_num == 0:
@@ -143,11 +128,10 @@ def analisar_gastos_com_ia(mes: str) -> dict:
         ano_anterior -= 1 
     gastos_mes_anterior, _ = calcular_gastos(mes_anterior_num, ano_anterior)
 
-    # Ordena os gastos do mês atual para inclusão de TODAS as categorias
     gastos_ordenados = sorted(gastos_mes_atual.items(), key=lambda item: item[1], reverse=True)
-    todas_as_categorias_gastos = dict(gastos_ordenados) # Inclui todas as categorias
+    todas_as_categorias_gastos = dict(gastos_ordenados) 
 
-    # Calcula as variações (Para insights)
+    # Calcula as variações 
     insights_comparativos = {}
     todas_categorias = set(gastos_mes_atual.keys()) | set(gastos_mes_anterior.keys())
     
@@ -161,15 +145,13 @@ def analisar_gastos_com_ia(mes: str) -> dict:
         elif gasto_atual > 0:
             insights_comparativos[categoria] = "Novo Gasto"
 
-
-    # --- PYTHON CRIA A LISTA FORMATADA EXATA ---
     lista_categorias_formatada = ""
     for categoria, valor in todas_as_categorias_gastos.items():
         # Concatena a string exata com R$ X.XX para a IA 'copiar e colar'
         lista_categorias_formatada += f"* {categoria}: R$ {valor:.2f}\n"
 
 
-    # --- CONSTRUÇÃO DO PROMPT DA IA (FORÇANDO SAÍDA JSON) ---
+    # --- CONSTRUÇÃO DO PROMPT DA IA ---
 
     prompt = f"""
     Você é um analista financeiro sênior do BTG Pactual. Analise os dados e gere a resposta formatada final.
@@ -190,13 +172,10 @@ def analisar_gastos_com_ia(mes: str) -> dict:
     Responda APENAS com o objeto JSON.
     ```json
     """
-    
-    # Chama a função de processamento (que tem o try/except)
+
     resultado_ia = processar_com_ia(prompt)
-    
-    # Em caso de sucesso, retorna o dicionário JSON (se falhar, retorna o erro do processar_com_ia)
+
     return resultado_ia
-# Arquivo: espinha.py (Nova função de Convite)
 
 def iniciar_plano_de_riqueza(valor_meta: float, finalidade: str, prazo_limite: str = None) -> dict:
     """
@@ -205,9 +184,6 @@ def iniciar_plano_de_riqueza(valor_meta: float, finalidade: str, prazo_limite: s
     with open('dados.json', 'r', encoding='utf-8') as f:
         dados = json.load(f)
     sobra_mensal = dados['usuario']['media_mensal_sobra']
-
-    # ... (Lógica de cálculo de prazo e aporte necessária, como na função anterior) ...
-    # (Usaremos o código completo que verifica o prazo limite)
     
     meses_necessarios = math.ceil(valor_meta / sobra_mensal)
     prazo_real_em_meses = meses_necessarios
@@ -216,7 +192,6 @@ def iniciar_plano_de_riqueza(valor_meta: float, finalidade: str, prazo_limite: s
     if prazo_limite:
         meses_limite = converter_prazo_para_meses(prazo_limite)
         if meses_limite <= 0:
-             # Retorna o erro de prazo no passado
              return {"tipo_resposta": "erro_prazo", "mensagem": f"O prazo limite... [mensagem de erro de prazo]"}
         
         if meses_limite < meses_necessarios:
@@ -227,7 +202,7 @@ def iniciar_plano_de_riqueza(valor_meta: float, finalidade: str, prazo_limite: s
              prazo_real_em_meses = meses_necessarios
              
     
-    # PROMPT PARA GERAR O CONVITE (Pilar 2: PS5)
+    # PROMPT PARA GERAR O CONVITE 
     prompt = f"""
     Você é um assistente do BTG Pactual. Gere uma mensagem de convite para o usuário iniciar o planejamento de sua meta.
     
@@ -275,17 +250,16 @@ def iniciar_pergunta_risco(valor_meta: float, finalidade: str, prazo_limite: str
     if sobra_mensal <= 0: 
         return {"erro": True, "mensagem": "A sobra mensal do usuário não é positiva. Não é possível iniciar um plano."}
 
-    # 1. CÁLCULO DO PRAZO BASE (O prazo que o dinheiro leva para atingir a meta)
+    # 1. CÁLCULO DO PRAZO BASE 
     meses_necessarios = math.ceil(valor_meta / sobra_mensal)
     prazo_real_em_meses = meses_necessarios
     mensagem_alerta = ""
 
     # 2. VERIFICAÇÃO DO PRAZO LIMITE DO USUÁRIO
     if prazo_limite:
-        # CHAMA A FUNÇÃO DE CONVERSÃO
         meses_limite = converter_prazo_para_meses(prazo_limite) 
 
-        # 3. VALIDAÇÃO DE DATA NO PASSADO (Resolve o problema de "comprar um carro até 2023")
+        # 3. VALIDAÇÃO DE DATA NO PASSADO
         if meses_limite <= 0:
             return {
                 "tipo_resposta": "erro_prazo", 
@@ -294,8 +268,7 @@ def iniciar_pergunta_risco(valor_meta: float, finalidade: str, prazo_limite: str
         
         # 4. COMPARAÇÃO DO PRAZO LIMITE VS. PRAZO NECESSÁRIO
         if meses_limite < meses_necessarios:
-            # O prazo desejado (limite) é menor que o necessário.
-            prazo_real_em_meses = meses_limite # <--- AGORA USAMOS O PRAZO CURTO DO USUÁRIO
+            prazo_real_em_meses = meses_limite
             aporte_necessario = math.ceil(valor_meta / meses_limite)
             
             mensagem_alerta = f"""
@@ -303,7 +276,6 @@ def iniciar_pergunta_risco(valor_meta: float, finalidade: str, prazo_limite: str
             Para cumprir o prazo, você precisará aumentar seu aporte mensal para R$ {aporte_necessario:.2f}.
             """
         else:
-             # O prazo necessário é igual ou menor que o limite. Usamos o necessário.
              prazo_real_em_meses = meses_necessarios
              
     # --- PROMPT DO CONSULTOR INTELIGENTE ---
