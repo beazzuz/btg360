@@ -49,79 +49,193 @@ HTML_CHAT = """
 <html lang="pt-br">
 <head>
   <meta charset="utf-8"/>
-  <title>Assistente Financeiro - Chat Local</title>
+  <title>Assistente Financeiro — Chat Local</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; background:#0b1220; color:#eee; }
-    header { padding:16px; background:#0f172a; border-bottom:1px solid #19233b; }
-    h1 { margin:0; font-size:18px; }
-    #chat { max-width: 820px; margin: 0 auto; padding: 16px; height: calc(100vh - 160px); overflow-y: auto; }
-    .msg { margin: 10px 0; display: flex; }
-    .you { justify-content: flex-end; }
-    .bot { justify-content: flex-start; }
-    .bubble { padding: 10px 12px; border-radius: 14px; max-width: 70%; line-height: 1.4; white-space: pre-wrap; }
-    .you .bubble { background:#2563eb; color:#fff; border-bottom-right-radius: 4px; }
-    .bot .bubble { background:#111827; border:1px solid #1f2937; color:#e5e7eb; border-bottom-left-radius: 4px; }
-    #composer { position: fixed; bottom: 0; left: 0; right: 0; background:#0f172a; border-top:1px solid #19233b; padding: 12px; }
-    form { display:flex; gap:8px; max-width:820px; margin: 0 auto; }
-    input, button { font-size:16px; }
-    input { flex:1; padding:10px 12px; border-radius: 10px; border:1px solid #334155; background:#0b1220; color:#e5e7eb; }
-    button { padding:10px 16px; border-radius:10px; border:0; background:#22c55e; color:#0b1220; font-weight:700; cursor:pointer; }
-    .meta { opacity:.7; font-size:12px; margin-top:2px; }
-    .row { max-width:820px; margin:0 auto; color:#9ca3af; padding:0 16px 8px; }
-    a { color:#60a5fa; }
+    :root{
+      --bg:#0b1220;        /* fundo da página */
+      --panel:#0f172a;     /* painéis (header/composer) */
+      --border:#1a2440;    /* linhas e contornos */
+      --text:#e5e7eb;      /* texto base */
+      --muted:#a1a7b3;     /* texto secundário */
+      --bubble:#111827;    /* bolha do bot */
+      --primary:#2563eb;   /* bolha do usuário */
+      --accent:#22c55e;    /* botão */
+      --shadow:0 6px 24px rgba(0,0,0,.25);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:10;
+      background:linear-gradient(180deg,rgba(15,23,42,.9),rgba(15,23,42,.75));
+      backdrop-filter:saturate(120%) blur(6px);
+      border-bottom:1px solid var(--border);
+      padding:14px 16px;
+    }
+    .wrap{max-width:900px;margin:0 auto}
+    .title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+    .title .dot{width:10px;height:10px;border-radius:999px;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+    .subtitle{margin-top:6px;color:var(--muted);font-size:13px}
+
+    /* Chat area */
+    #chat{
+      max-width:900px;margin:0 auto;padding:20px 16px 120px;
+      min-height:calc(100vh - 150px);
+      overflow-y:auto;scroll-behavior:smooth;
+    }
+    /* scrollbar */
+    #chat::-webkit-scrollbar{width:10px}
+    #chat::-webkit-scrollbar-thumb{background:#1f2a44;border-radius:10px}
+    #chat::-webkit-scrollbar-thumb:hover{background:#2a375b}
+
+    /* Messages */
+    .msg{display:flex;margin:12px 0;gap:10px;animation:pop .16s ease-out}
+    @keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .msg.you{justify-content:flex-end}
+    .avatar{
+      width:32px;height:32px;border-radius:10px;background:#19233b;display:flex;align-items:center;justify-content:center;
+      color:#9fb4ff;font-weight:800;flex-shrink:0;border:1px solid var(--border)
+    }
+    .bubble{
+      mix-width:min(72%,500px);
+      padding:12px 14px;border-radius:var(--radius);line-height:1.4;white-space:pre-wrap;word-wrap:break-word;
+      border:1px solid var(--border);box-shadow:var(--shadow)
+    }
+    .bot .bubble{background:var(--bubble);border-bottom-left-radius:8px}
+    .you .bubble{background:var(--primary);color:#fff;border-bottom-right-radius:8px;border-color:rgba(255,255,255,.08)}
+    .meta{margin-top:6px;color:var(--muted);font-size:12px}
+
+    /* Composer */
+    #composer{
+      position:sticky; bottom:0; z-index:20;
+      background:linear-gradient(180deg,rgba(11,18,32,0),var(--panel) 22%);
+      padding:14px 16px;border-top:1px solid var(--border);
+    }
+    .composer-inner{
+      max-width:900px;margin:0 auto;
+      background:#0b1326;border:1px solid var(--border);border-radius:14px;padding:10px;display:flex;gap:10px;align-items:flex-end;
+      box-shadow:var(--shadow);
+    }
+    textarea{
+      flex:1;min-height:20px;max-height:160px;resize:none;border:0;outline:none;background:transparent;color:var(--text);
+      font:16px/1.45 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;padding:8px 10px; min wi
+    }
+    button{
+      border:0;cursor:pointer;background:var(--accent);color:#0b1220;font-weight:800;border-radius:12px;
+      padding:12px 16px;min-width:92px;transition:transform .08s ease,filter .08s ease
+    }
+    button:hover{transform:translateY(-1px);filter:brightness(1.05)}
+    button:active{transform:translateY(0)}
+    .hint{margin-top:8px;color:var(--muted);font-size:12px;text-align:left}
+    a{color:#86b7ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    @media (max-width:560px){
+      .bubble{max-width:85%}
+      button{min-width:84px;padding:11px 14px}
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Assistente Financeiro — Modo Local</h1>
-    <div class="row">Dica: testes rápidos — “status de caixa”, “gastos de setembro”, “quero comprar um carro em 2028”.</div>
+    <div class="wrap">
+      <div class="title"><span class="dot"></span> Assistente Financeiro — Modo Local</div>
+      <div class="subtitle">Dica: “status de caixa”, “gastos de setembro”, “quero comprar uma casa em 2028”.</div>
+    </div>
   </header>
-  <div id="chat"></div>
+
+  <div id="chat" class="wrap"></div>
+
   <div id="composer">
-    <form id="f">
-      <input id="msg" placeholder="Digite sua mensagem..." autocomplete="off"/>
-      <button>Enviar</button>
-    </form>
-    <div class="row meta">User ID atual: <code id="uid"></code>. Para trocar o usuário, adicione ?user_id=seu_numero na URL.</div>
+    <div class="composer-inner">
+      <textarea id="msg" placeholder="Digite sua mensagem... (Enter envia • Shift+Enter quebra linha)" autocomplete="off"></textarea>
+      <button id="send">Enviar</button>
+    </div>
+    <div class="wrap hint">User ID atual: <code id="uid"></code>. Troque adicionando <code>?user_id=seu_numero</code> na URL.</div>
   </div>
+
 <script>
-  const chat = document.getElementById('chat');
-  const f = document.getElementById('f');
-  const msg = document.getElementById('msg');
-  const uidEl = document.getElementById('uid');
+  const chat   = document.getElementById('chat');
+  const msgEl  = document.getElementById('msg');
+  const sendBt = document.getElementById('send');
+  const uidEl  = document.getElementById('uid');
 
   const qs = new URLSearchParams(location.search);
   const userId = qs.get('user_id') || 'local:teste';
-
   uidEl.textContent = userId;
 
-  function addBubble(text, who) {
-    const wrap = document.createElement('div');
-    wrap.className = 'msg ' + (who === 'you' ? 'you' : 'bot');
-    const b = document.createElement('div');
-    b.className = 'bubble';
-    b.textContent = text;
-    wrap.appendChild(b);
-    chat.appendChild(wrap);
-    chat.scrollTop = chat.scrollHeight;
+  function ts(){ // timestamp HH:MM
+    const d = new Date(); return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
   }
 
-  f.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const text = msg.value.trim();
-    if (!text) return;
-    addBubble(text, 'you');
-    msg.value = '';
-    const r = await fetch('/api/message', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ user_id: userId, mensagem: text })
-    });
-    const data = await r.json();
-    addBubble(data.resposta || '(sem resposta)', 'bot');
+  function addBubble(text, who='bot'){
+    const row = document.createElement('div');
+    row.className = 'msg ' + who;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar';
+    avatar.textContent = who === 'you' ? 'Você' : 'IA';
+    avatar.style.fontSize = '10px';
+
+    const right = document.createElement('div');
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = ts();
+
+    right.appendChild(bubble);
+    right.appendChild(meta);
+
+    if (who === 'you'){ row.appendChild(right); row.appendChild(avatar); }
+    else { row.appendChild(avatar); row.appendChild(right); }
+
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight + 200;
+  }
+
+  // Auto-resize do textarea
+  function autoresize(){
+    msgEl.style.height = 'auto';
+    msgEl.style.height = Math.min(msgEl.scrollHeight, 160) + 'px';
+  }
+  msgEl.addEventListener('input', autoresize);
+  setTimeout(autoresize, 10);
+
+  // Enter envia / Shift+Enter = nova linha
+  msgEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey){
+      e.preventDefault();
+      sendBt.click();
+    }
   });
 
+  sendBt.addEventListener('click', async () => {
+    const text = msgEl.value.trim();
+    if (!text) return;
+    addBubble(text, 'you');
+    msgEl.value = '';
+    autoresize();
+
+    try{
+      const r = await fetch('/api/message', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ user_id: userId, mensagem: text })
+      });
+      const data = await r.json();
+      addBubble(data.resposta || '(sem resposta)', 'bot');
+    }catch(err){
+      addBubble('⚠️ Erro ao enviar: ' + (err.message || err), 'bot');
+    }
+  });
+
+  // Mensagem de boas-vindas
   addBubble('👋 Olá! Estou pronto no modo local. Como posso ajudar?', 'bot');
 </script>
 </body>
