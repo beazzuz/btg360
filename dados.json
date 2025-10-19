@@ -1,0 +1,549 @@
+{
+  "usuario": {
+    "nome": "João da Silva",
+    "perfil_de_risco": "Moderado",
+    "saldo_conta_corrente": 2550.0,
+    "media_mensal_sobra": 600.0,
+    "gastos_fixos": {
+      "moradia": 0,
+      "contas": 0,
+      "transporte": 0,
+      "saude": 0,
+      "educacao": 0,
+      "outros": 0
+    },
+    "orcamento_mensal": {
+      "alimentacao": 0,
+      "lazer": 0,
+      "mercado": 0,
+      "transporte": 0,
+      "streaming": 0
+    },
+    "meses_fundo_emergencia": 0,
+    "bfm_onboarding_done": false
+  },
+  "metas_ativas": [
+    {
+      "nome": "Meu PS5",
+      "valor_total": 4500.0,
+      "valor_atual": 0.0,
+      "prazo_meses": 8,
+      "aporte_mensal_sugerido": 562.5,
+      "tipo_investimento_sugerido": "Curto Prazo"
+    },
+    {
+      "nome": "comprar uma casa",
+      "valor_total": 100000.0,
+      "valor_atual": 0.0,
+      "prazo_meses": 27,
+      "aporte_mensal_sugerido": 3703.7,
+      "tipo_investimento_sugerido": "Curto Prazo"
+    },
+    {
+      "nome": "comprar um carro",
+      "valor_total": 20000.0,
+      "valor_atual": 0.0,
+      "prazo_meses": 34,
+      "aporte_mensal_sugerido": 588.24,
+      "tipo_investimento_sugerido": "Curto Prazo"
+    },
+    {
+      "nome": "comprar um carro",
+      "valor_total": 50000.0,
+      "valor_atual": 0.0,
+      "prazo_meses": 84,
+      "aporte_mensal_sugerido": 595.24,
+      "tipo_investimento_sugerido": "Curto Prazo"
+    },
+    {
+      "nome": "comprar uma casa",
+      "valor_total": 20000.0,
+      "valor_atual": 0.0,
+      "prazo_meses": 34,
+      "aporte_mensal_sugerido": 588.24,
+      "tipo_investimento_sugerido": "Curto Prazo"
+    }
+  ],
+  "transacoes": [
+    {
+      "id": "T001",
+      "data": "2025-09-02",
+      "tipo": "PIX",
+      "descricao": "Salário - Empresa XYZ",
+      "valor": 7500.0,
+      "categoria": "Renda",
+      "operacao": "credito"
+    },
+    {
+      "id": "T002",
+      "data": "2025-09-05",
+      "tipo": "BOLETO",
+      "descricao": "Aluguel Apartamento",
+      "valor": -2800.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T003",
+      "data": "2025-09-07",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Supermercado Pague Menos",
+      "valor": -450.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T004",
+      "data": "2025-09-08",
+      "tipo": "PIX",
+      "descricao": "Mensalidade Academia Body Fit",
+      "valor": -150.0,
+      "categoria": "Saúde",
+      "operacao": "debito"
+    },
+    {
+      "id": "T005",
+      "data": "2025-09-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Netflix",
+      "valor": -55.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T006",
+      "data": "2025-09-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Spotify Premium",
+      "valor": -25.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T007",
+      "data": "2025-09-12",
+      "tipo": "PIX",
+      "descricao": "Pagamento de Fatura de Internet",
+      "valor": -100.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T008",
+      "data": "2025-09-15",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Ifood - Jantar",
+      "valor": -75.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T009",
+      "data": "2025-09-16",
+      "tipo": "BOLETO",
+      "descricao": "Fatura de Energia Elétrica",
+      "valor": -180.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T010",
+      "data": "2025-09-18",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Uber Viagem para o Centro",
+      "valor": -40.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T011",
+      "data": "2025-09-20",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Amazon Prime Video",
+      "valor": -35.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T012",
+      "data": "2025-09-22",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Supermercado Pague Menos",
+      "valor": -380.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T013",
+      "data": "2025-09-25",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Ifood - Pizza",
+      "valor": -65.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T014",
+      "data": "2025-09-26",
+      "tipo": "PIX",
+      "descricao": "Conta de Água",
+      "valor": -60.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T015",
+      "data": "2025-09-27",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Consulta Médica",
+      "valor": -250.0,
+      "categoria": "Saúde",
+      "operacao": "debito"
+    },
+    {
+      "id": "T016",
+      "data": "2025-09-28",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Cinema e Pipoca",
+      "valor": -85.0,
+      "categoria": "Lazer",
+      "operacao": "debito"
+    },
+    {
+      "id": "T017",
+      "data": "2025-08-29",
+      "tipo": "PIX",
+      "descricao": "Combustível",
+      "valor": -180.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T018",
+      "data": "2025-08-30",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Almoço Restaurante",
+      "valor": -60.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T019",
+      "data": "2025-08-01",
+      "tipo": "PIX",
+      "descricao": "Estorno de Compra Online",
+      "valor": 95.0,
+      "categoria": "Renda",
+      "operacao": "credito"
+    },
+    {
+      "id": "T020",
+      "data": "2025-10-02",
+      "tipo": "PIX",
+      "descricao": "Salário - Empresa XYZ",
+      "valor": 7500.0,
+      "categoria": "Renda",
+      "operacao": "credito"
+    },
+    {
+      "id": "T021",
+      "data": "2025-08-03",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Padaria - Café da Manhã",
+      "valor": -35.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T022",
+      "data": "2025-10-05",
+      "tipo": "BOLETO",
+      "descricao": "Aluguel Apartamento",
+      "valor": -2800.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T023",
+      "data": "2025-10-06",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Estacionamento Shopping",
+      "valor": -25.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T024",
+      "data": "2025-08-08",
+      "tipo": "PIX",
+      "descricao": "Mensalidade Academia Body Fit",
+      "valor": -150.0,
+      "categoria": "Saúde",
+      "operacao": "debito"
+    },
+    {
+      "id": "T025",
+      "data": "2025-08-09",
+      "tipo": "BOLETO",
+      "descricao": "Fatura de Telefone Móvel",
+      "valor": -85.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T026",
+      "data": "2025-10-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Netflix",
+      "valor": -55.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T027",
+      "data": "2025-10-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Spotify Premium",
+      "valor": -25.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T028",
+      "data": "2025-10-11",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Farmácia - Remédio",
+      "valor": -55.0,
+      "categoria": "Saúde",
+      "operacao": "debito"
+    },
+    {
+      "id": "T029",
+      "data": "2025-10-12",
+      "tipo": "PIX",
+      "descricao": "Pagamento de Fatura de Internet",
+      "valor": -100.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T030",
+      "data": "2025-10-13",
+      "tipo": "PIX",
+      "descricao": "Assinatura Jornal Digital",
+      "valor": -20.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T031",
+      "data": "2025-10-14",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Passeio no Parque - Lanche",
+      "valor": -45.0,
+      "categoria": "Lazer",
+      "operacao": "debito"
+    },
+    {
+      "id": "T032",
+      "data": "2025-10-16",
+      "tipo": "BOLETO",
+      "descricao": "Fatura de Energia Elétrica",
+      "valor": -195.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T033",
+      "data": "2025-10-17",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Corrida 99 - Volta do Trabalho",
+      "valor": -30.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T034",
+      "data": "2025-10-19",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Almoço na Praça de Alimentação",
+      "valor": -65.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T035",
+      "data": "2025-10-21",
+      "tipo": "BOLETO",
+      "descricao": "Seguro Residencial",
+      "valor": -120.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T036",
+      "data": "2025-10-23",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Loja de Roupas - Camiseta",
+      "valor": -140.0,
+      "categoria": "Outras Despesas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T037",
+      "data": "2025-11-01",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Passagem de Ônibus Mensal",
+      "valor": -160.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T038",
+      "data": "2025-11-02",
+      "tipo": "PIX",
+      "descricao": "Salário - Empresa XYZ",
+      "valor": 7500.0,
+      "categoria": "Renda",
+      "operacao": "credito"
+    },
+    {
+      "id": "T039",
+      "data": "2025-11-04",
+      "tipo": "PIX",
+      "descricao": "Lava Rápido",
+      "valor": -45.0,
+      "categoria": "Transporte",
+      "operacao": "debito"
+    },
+    {
+      "id": "T040",
+      "data": "2025-11-05",
+      "tipo": "BOLETO",
+      "descricao": "Aluguel Apartamento",
+      "valor": -2800.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T041",
+      "data": "2025-11-06",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Lanchonete",
+      "valor": -28.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T042",
+      "data": "2025-11-08",
+      "tipo": "PIX",
+      "descricao": "Mensalidade Academia Body Fit",
+      "valor": -150.0,
+      "categoria": "Saúde",
+      "operacao": "debito"
+    },
+    {
+      "id": "T043",
+      "data": "2025-11-09",
+      "tipo": "BOLETO",
+      "descricao": "Fatura de Telefone Móvel",
+      "valor": -85.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T044",
+      "data": "2025-11-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Netflix",
+      "valor": -55.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T045",
+      "data": "2025-11-10",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Spotify Premium",
+      "valor": -25.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T046",
+      "data": "2025-11-12",
+      "tipo": "PIX",
+      "descricao": "Pagamento de Fatura de Internet",
+      "valor": -100.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T047",
+      "data": "2025-11-14",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Jantar em Restaurante Japonês",
+      "valor": -110.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    },
+    {
+      "id": "T048",
+      "data": "2025-11-16",
+      "tipo": "BOLETO",
+      "descricao": "Fatura de Energia Elétrica",
+      "valor": -170.0,
+      "categoria": "Moradia",
+      "operacao": "debito"
+    },
+    {
+      "id": "T049",
+      "data": "2025-11-20",
+      "tipo": "CARTÃO CRÉDITO (Fatura)",
+      "descricao": "Amazon Prime Video",
+      "valor": -35.0,
+      "categoria": "Assinaturas",
+      "operacao": "debito"
+    },
+    {
+      "id": "T050",
+      "data": "2025-11-25",
+      "tipo": "CARTÃO DÉBITO",
+      "descricao": "Supermercado Pague Menos",
+      "valor": -420.0,
+      "categoria": "Alimentação",
+      "operacao": "debito"
+    }
+  ],
+  "alertas": [
+    {
+      "categoria": "Transporte",
+      "limite_maximo": 100.0,
+      "gasto_atual": 40.0,
+      "status": "ABAIXO",
+      "data_criacao": "2025-10-19T05:40:32.455540"
+    },
+    {
+      "categoria": "Transporte",
+      "limite_maximo": 100.0,
+      "gasto_atual": 40.0,
+      "status": "ABAIXO",
+      "data_criacao": "2025-10-19T05:42:38.389797"
+    },
+    {
+      "categoria": "Transporte",
+      "limite_maximo": 100.0,
+      "gasto_atual": 55.0,
+      "status": "ABAIXO",
+      "data_criacao": "2025-10-19T05:44:26.593615"
+    },
+    {
+      "categoria": "Alimentação",
+      "limite_maximo": 50.0,
+      "gasto_atual": 65.0,
+      "status": "ATINGIDO",
+      "data_criacao": "2025-10-19T05:49:30.848799"
+    }
+  ]
+}
